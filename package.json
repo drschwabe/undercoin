@@ -1,0 +1,15 @@
+{
+  "name": "undercoin",
+  "version": "0.0.1",
+  "description": "Bitcoin utility belt",
+  "main": "undercoin.js",
+  "scripts": {
+    "test": "tape test.js | tap-spec"
+  },
+  "author": "Derrick Schwabe",
+  "license": "MIT",
+  "devDependencies": {
+    "tap-spec": "4.1.1",
+    "tape": "4.9.0"
+  }
+}
