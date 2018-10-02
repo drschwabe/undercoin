@@ -6,15 +6,15 @@ Bitcoin utility belt
 ```bash
 npm install undercoin
 ```
-In node or browser (ie- via Browserify)
+In node or browser
 ```javascript
-var undercoin = require('undercoin')
+const undercoin = require('undercoin')
 ```
 
 
 ### api
 
-** btcToSatoshi **  
+**btcToSatoshi**   
 `undercoin.btcToSatoshi(btcAmount)`  
 Converts BTC to satoshis
 
@@ -22,5 +22,12 @@ Converts BTC to satoshis
 undercoin.btcToSatoshi(1) // 100000000
 ```
 
-MIT
+**satoshiToBtc**   
+`undercoin.satoshiToBtc(satoshis)`  
+Converts satoshis to BTCs
 
+```javascript
+undercoin.satoshiToBtc(15000000) // 100000000
+```
+
+MIT
