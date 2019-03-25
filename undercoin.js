@@ -10,11 +10,12 @@ undercoin.satoshiToBtc = (satoshis) => satoshis / 100000000
 
 const bitcoin = require('bitcoinjs-lib')
 
-undercoin.newAddress = (testnet) => {
-  //first create a Bitcoin testnet address:
-  let TESTNET = bitcoin.networks.testnet
-  let keyPair = bitcoin.ECPair.makeRandom({ network: TESTNET })
-  let { address } = bitcoin.payments.p2pkh({ pubkey: keyPair.publicKey, network : TESTNET })
+undercoin.newAddress = (isTestnet) => {
+  let network
+  network = isTestnet ? bitcoin.networks.testnet : bitcoin.networks.bitcoin
+  //create a Bitcoin address:
+  let keyPair = bitcoin.ECPair.makeRandom({ network: network })
+  let { address } = bitcoin.payments.p2pkh({ pubkey: keyPair.publicKey, network : network })
   return address
 }
 
