@@ -21,3 +21,13 @@ test('Can convert satoshis to BTC', (t) => {
 
   t.equals(btc, 1.5, 'Accurately converts 150 million satoshis to 1.5 BTC')
 })
+
+const bitcoinValidate = require('bitcoin-address-validation')
+
+test('Can create a Bitcoin testnet address?', (t) => {
+  t.plan(2)
+  var newAddress = undercoin.newAddress(true)
+  //Verify it is actually a valid Bitcoin address:
+  t.ok (   bitcoinValidate(newAddress) , 'The new Bitcoin address validates OK')
+  t.ok (  bitcoinValidate(newAddress).testnet, 'New Bitcoin address is testnet address' )
+})
