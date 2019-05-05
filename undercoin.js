@@ -19,4 +19,31 @@ undercoin.newAddress = (isTestnet) => {
   return address
 }
 
+const request = require('request')
+
+undercoin.getAddress = (isTestnet, callback) => {
+  // let network
+  // network = isTestnet ? bitcoin.networks.testnet : bitcoin.networks.bitcoin
+
+  //get hash of the latest block ...
+  request('https://blockchain.info/q/latesthash', (err, res) => {
+    if(err) return console.log(err)
+    let latestHash = res.body
+
+    //get txs for block...
+    request({ url: 'https://blockchain.info/rawblock/' + latestHash, json : true }, (err, res) => {
+      if(err) return console.log(err)
+      let block = res.body
+      let tx = block.tx[0].hash
+
+      //get a transaction from the block...
+      request({ url: `https://blockchain.info/rawtx/${tx}`, json : true }, (err, res) => {
+        if(err) return console.log(err)
+        let address = res.body.out[0].addr
+        return callback(null, address)
+      })
+    })
+  })
+}
+
 module.exports = undercoin

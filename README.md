@@ -39,4 +39,13 @@ if `testnet` param (boolean) is supplied the address will be testnet
 undercoin.newAddress() // 3FM1J7HkVcZeHTcWadxCN9UyTLYDpUxjJn
 ```
 
+**getAddress**   
+`undercoin.newAddress(testnet, callback)`  
+Get a (recent) address on the blockchain
+
+```javascript
+undercoin.getAddress((err, address) => console.log(address))
+// 3FM1J7HkVcZeHTcWadxCN9UyTLYDpUxjJn
+```
+
 MIT
