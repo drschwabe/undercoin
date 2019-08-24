@@ -40,12 +40,13 @@ test('Can create a Bitcoin address?', (t) => {
   t.notOk( bitcoinValidate(newAddress.testnet), 'New Bitcoin address is not testnet address')
 })
 
-test.only('Can get an existing Bitcoin address?', (t) => {
+test('Can get an existing Bitcoin address?', (t) => {
   t.plan(1)
-  undercoin.getAddress(false, (err, randomAddress) => {
-    if(err) t.fail(err)
-    console.log('we got an address...')
-    console.log(randomAddress)
-    t.ok (  bitcoinValidate(randomAddress), 'The address we got is a valid Bitcoin address')
+  undercoin.getAddress(false, (err, bitcoinAddress) => {
+    if(err) {
+      console.log(err)
+      return t.fail(err)
+    }
+    t.ok (  bitcoinValidate(bitcoinAddress), 'The address we got is a valid Bitcoin address')
   })
 })
