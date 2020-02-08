@@ -33,14 +33,14 @@ undercoin.satoshiToBtc(15000000) // 100000000
 **newAddress**   
 `undercoin.newAddress(testnet)`  
 Creates a new Bitcoin address
-if `testnet` param (boolean) is supplied the address will be testnet
+If `testnet` param (boolean) is supplied the address will be testnet
 
 ```javascript
 undercoin.newAddress() // 3FM1J7HkVcZeHTcWadxCN9UyTLYDpUxjJn
 ```
 
 **getAddress**   
-`undercoin.newAddress(testnet, callback)`  
+`undercoin.getAddress(testnet, callback)`  
 Get a (recent) address on the blockchain
 
 ```javascript
