@@ -22,7 +22,13 @@ undercoin.newAddress = (isTestnet) => {
 const request = require('request')
 const _ = require('underscore')
 
-undercoin.getAddress = (isTestnet, callback) => {
+undercoin.getAddress = (...params) => {
+  //parse args
+  let isTestnet = _.find(params, (param) => _.isBoolean(param))
+  let callback = _.find(params, (param) => _.isFunction(param))
+
+  if(!callback) throw 'a callback must be provided'
+
   // let network
   // network = isTestnet ? bitcoin.networks.testnet : bitcoin.networks.bitcoin
 
