@@ -73,4 +73,10 @@ undercoin.getAddress = (...params) => {
   })
 }
 
+undercoin.addressFromWIF = (...params) => {
+  const keyPair = bitcoin.ECPair.fromWIF(wif)
+  const { address } = bitcoin.payments.p2pkh({ pubkey: keyPair.publicKey })
+  return address 
+}
+
 module.exports = undercoin

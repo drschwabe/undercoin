@@ -50,3 +50,11 @@ test('Can get an existing Bitcoin address?', (t) => {
     t.ok (  bitcoinValidate(bitcoinAddress), 'The address we got is a valid Bitcoin address')
   })
 })
+
+
+test('Can get convert a WIF to Bitcoin address?', t => {
+  t.plan(1)
+  let bitcoinAddress = undercoin.addressFromWIF('L4ub9pkXFif8692fbTTQoFw9FoyNRxt822iEF6bxdXP2LAX7nFDt')
+  console.log('resulting BTC address: ' + bitcoinAddress)
+  t.ok (  bitcoinValidate(bitcoinAddress), 'The address returned is a valid Bitcoin address')
+})
