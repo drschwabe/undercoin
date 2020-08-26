@@ -26,10 +26,11 @@ const bitcoinValidate = require('bitcoin-address-validation')
 
 test('Can create a Bitcoin testnet address?', (t) => {
   t.plan(2)
-  var newAddress = undercoin.newAddress(true)
+  let newAddress = undercoin.newAddress(true)
+  let newAddressValidated = bitcoinValidate(newAddress)
   //Verify it is actually a valid Bitcoin testnet address:
-  t.ok (   bitcoinValidate(newAddress) , 'The new Bitcoin address validates OK')
-  t.ok (  bitcoinValidate(newAddress).testnet, 'New Bitcoin address is testnet address' )
+  t.ok (   newAddressValidated , 'The new Bitcoin address validates OK')
+  t.equals (  newAddressValidated.network, 'testnet', 'New Bitcoin address is testnet address' )
 })
 
 test('Can create a Bitcoin address?', (t) => {
