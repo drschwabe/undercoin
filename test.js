@@ -53,7 +53,7 @@ test('Can get an existing Bitcoin address?', (t) => {
 })
 
 
-test('Can get convert a WIF to Bitcoin address?', t => {
+test('Can convert a WIF to Bitcoin address?', t => {
   t.plan(1)
   let bitcoinAddress = undercoin.addressFromWIF('L4ub9pkXFif8692fbTTQoFw9FoyNRxt822iEF6bxdXP2LAX7nFDt')
   console.log('resulting BTC address: ' + bitcoinAddress)
