@@ -1,7 +1,7 @@
 var test = require('tape'),
     undercoin = require('./undercoin.js')
 
-test('Can convert BTC to satoshis', (t) => {
+test('Can convert BTC to satoshis', t => {
   t.plan(2)
 
   var satoshisInOneBTC = 100000000,
@@ -14,7 +14,7 @@ test('Can convert BTC to satoshis', (t) => {
   t.notOk(satoshis == satoshisNotEquallingOneBTC)
 })
 
-test('Can convert satoshis to BTC', (t) => {
+test('Can convert satoshis to BTC', t => {
   t.plan(1)
   var satoshisInOneBTC = 150000000,
       btc = undercoin.satoshiToBtc(satoshisInOneBTC)
@@ -24,7 +24,44 @@ test('Can convert satoshis to BTC', (t) => {
 
 const bitcoinValidate = require('bitcoin-address-validation')
 
-test('Can create a Bitcoin testnet address?', (t) => {
+const CoinKey = require('coinkey')
+
+test('Can create a new keypair?', t => {
+  t.plan(1)
+  let keyPair = undercoin.newKeypair()
+
+  //convert the private key into a buffer:
+  const bytes = Buffer.from(keyPair.private, 'hex')
+
+  //and feed to CoinKey which can re-create the keypair from said buffer:
+  let coinKeypair = new CoinKey(  bytes  )
+
+  //now test that the resulting keypair is valid:
+  let address = coinKeypair.publicAddress
+  t.ok (  bitcoinValidate(address), 'The keypair produces a valid BTC mainnet address')
+})
+
+test('Can get an existing Bitcoin address?', t => {
+  t.plan(1)
+  undercoin.getAddress(false, (err, bitcoinAddress) => {
+    if(err) {
+      console.log(err)
+      return t.fail(err)
+    }
+    console.log(bitcoinAddress)
+    t.ok (  bitcoinValidate(bitcoinAddress), 'The address we got is a valid Bitcoin address')
+  })
+})
+
+test('Can create a Bitcoin address?', t => {
+  t.plan(2)
+  var newAddress = undercoin.newAddress()
+  //Verify it is actually a valid Bitcoin address:
+  t.ok( bitcoinValidate(newAddress), 'The new Bitcoin address validates OK')
+  t.notOk( bitcoinValidate(newAddress.testnet), 'New Bitcoin address is not testnet address')
+})
+
+test('Can create a Bitcoin testnet address?', t => {
   t.plan(2)
   let newAddress = undercoin.newAddress(true)
   let newAddressValidated = bitcoinValidate(newAddress)
@@ -33,29 +70,57 @@ test('Can create a Bitcoin testnet address?', (t) => {
   t.equals (  newAddressValidated.network, 'testnet', 'New Bitcoin address is testnet address' )
 })
 
-test('Can create a Bitcoin address?', (t) => {
+
+const bs58check = require('bs58check')
+const wif = require('wif')
+
+test('Can create a WIF?', t => {
+  t.plan(3)
+  let newWIF = undercoin.newWIF()
+  let isValid = bs58check.decode(newWIF)
+  t.ok(isValid, 'WIF is a valid Base 58 string')
+
+  //secondary check...
+  let isValid2 = wif.decode(newWIF)
+  t.ok(isValid2, 'WIF decoded OK')
+
+  //another check; make a Bitcoin address from the WIF: 
+  let btcAddressFromWif = undercoin.addressFromWIF( newWIF  )
+  let validated = bitcoinValidate(btcAddressFromWif )
+
+  t.ok(validated && validated.network === 'mainnet', 'Address generated from WIF is valid and BTC mainnet')
+})
+
+test('Can create a WIF (testnet)?', t => {
+  t.plan(3)
+  let newWIFTestnet = undercoin.newWIF(true)
+
+  let isValid = bs58check.decode(newWIFTestnet)
+  t.ok(isValid, 'WIF is a valid Base 58 string')
+
+  let isValidTestnet = wif.decode(newWIFTestnet)
+  t.ok(isValidTestnet, 'WIF decoded OK')
+
+  //outputs a testnet address
+  let newTestnetAddress = undercoin.addressFromWIF( newWIFTestnet, true )
+  let validated = bitcoinValidate(newTestnetAddress )
+  t.ok(validated && validated.network === 'testnet', 'Address generated from WIF is valid and BTC testnet')
+})
+
+test.skip('Can verify a string is a WIF?', t => {
+  //let thisIsAWif =
+
+})
+
+test.skip('Can send BTC?', t => {
   t.plan(2)
-  var newAddress = undercoin.newAddress()
-  //Verify it is actually a valid Bitcoin address:
-  t.ok( bitcoinValidate(newAddress), 'The new Bitcoin address validates OK')
-  t.notOk( bitcoinValidate(newAddress.testnet), 'New Bitcoin address is not testnet address')
-})
+  let notAValidAttempt = undercoin.sendBTC(null, 'test', 1)
+  t.notOk(notAValidAttempt)
 
-test('Can get an existing Bitcoin address?', (t) => {
-  t.plan(1)
-  undercoin.getAddress(false, (err, bitcoinAddress) => {
-    if(err) {
-      console.log(err)
-      return t.fail(err)
-    }
-    t.ok (  bitcoinValidate(bitcoinAddress), 'The address we got is a valid Bitcoin address')
-  })
-})
+  let privateKey = 'cPBieu6V2RwoKdZn6bNtWBp6YdMFAD5PrG8BNT2Ezuviqva83qwL' 
+  //^ needs testnet BTC!!
+  let destinationAddress =  'n4Xj9EGkZYMKNGjfKtiqcZtUyoe2NXqs3K' //< testnet address
 
-
-test('Can convert a WIF to Bitcoin address?', t => {
-  t.plan(1)
-  let bitcoinAddress = undercoin.addressFromWIF('L4ub9pkXFif8692fbTTQoFw9FoyNRxt822iEF6bxdXP2LAX7nFDt')
-  console.log('resulting BTC address: ' + bitcoinAddress)
-  t.ok (  bitcoinValidate(bitcoinAddress), 'The address returned is a valid Bitcoin address')
+  let testnetAttempt = undercoin.sendBTC(privateKey, destinationAddress, 0.001)
+  t.ok(testnetAttempt)
 })

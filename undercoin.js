@@ -2,23 +2,50 @@
 
 const undercoin = {}
 
+const CoinKey = require('coinkey')
+const secureRandom = require('secure-random')
+
 //Convert a BTC decimal value (ie- 1.3 BTC) to Satoshis:
 undercoin.btcToSatoshi = (bitcoin) => Math.round(bitcoin * 100000000)
 
 undercoin.satoshiToBtc = (satoshis) => satoshis / 100000000
 
-
-const bitcoin = require('bitcoinjs-lib')
-
-undercoin.newAddress = (isTestnet) => {
-  let network
-  network = isTestnet ? bitcoin.networks.testnet : bitcoin.networks.bitcoin
-  //create a Bitcoin address:
-  let keyPair = bitcoin.ECPair.makeRandom({ network: network })
-  let { address } = bitcoin.payments.p2pkh({ pubkey: keyPair.publicKey, network : network })
-  return address
+undercoin.newAddress = isTestnet => {
+  let network = isTestnet ? 0x6F : 0x00
+  let bytes = secureRandom.randomBuffer(32)
+  let keyPair = new CoinKey(bytes, { public : network, private : network })
+  return keyPair.publicAddress
 }
 
+undercoin.newKeypair = isTestnet => {
+  let network = isTestnet ? 0x6F : 0x00
+  let bytes = secureRandom.randomBuffer(32)
+  let keyPair = new CoinKey(bytes, network)
+  let keyPairStrings = {
+    private :  keyPair.privateKey.toString('hex'),
+    public : keyPair.publicKey.toString('hex'),
+  }
+  return keyPairStrings
+}
+
+const wif = require('wif')
+
+undercoin.newWIF = isTestnet => {
+  let network = isTestnet ? 239 : 128 //< wif lib needs decimal prefix
+  let bytes = secureRandom.randomBuffer(32)
+  let privateKey = new Buffer( bytes, 'hex' )
+  let newWIF = wif.encode(network, privateKey, true)
+  return newWIF
+}
+
+
+undercoin.addressFromWIF = (wif, isTestnet) => {
+  let network = isTestnet ? 0x6F : 0x00
+  let keyPair = CoinKey.fromWif(wif, network)
+  return keyPair.publicAddress
+}
+
+//### getAddress ###
 const request = require('request')
 const _ = require('underscore')
 
@@ -72,11 +99,6 @@ undercoin.getAddress = (...params) => {
     })
   })
 }
-
-undercoin.addressFromWIF = (...params) => {
-  const keyPair = bitcoin.ECPair.fromWIF(wif)
-  const { address } = bitcoin.payments.p2pkh({ pubkey: keyPair.publicKey })
-  return address 
-}
+//###
 
 module.exports = undercoin
