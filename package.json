@@ -1,6 +1,6 @@
 {
   "name": "undercoin",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Bitcoin utility belt",
   "main": "undercoin.js",
   "scripts": {
@@ -12,10 +12,10 @@
     "tap-spec": "5.0.0",
     "tape": "4.9.0"
   },
+  "keywords": ["bitcoin, wif, satoshi, keypair, address, coinkey, bitcoinjs"],
   "dependencies": {
     "bitcoin-address-validation": "1.0.1",
     "bitcoinjs-lib": "4.0.2",
-    "coininfo": "5.1.0",
     "coinkey": "3.0.0",
     "request": "2.88.0",
     "secure-random": "1.1.2",
