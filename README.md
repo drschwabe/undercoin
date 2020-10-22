@@ -13,7 +13,9 @@ const undercoin = require('undercoin')
 ### api
 <a name="api"></a>
 
-For functions that accept a `testnet` parameter, said parameter needs be just `true` (otherwise the function will default to mainnet).    
+For functions that accept a `testnet` parameter, said parameter needs be just `true` (otherwise the function will default to mainnet).
+
+For the conversion functions - if they would otherwise return a large number beyond JavaScript's limit a string representation of said number will be returned instead, to a max of 21 decimal points.  
 <br>
 
 **btcToSatoshi**   
@@ -34,7 +36,7 @@ undercoin.satoshiToBtc(15000000) // 0.15
 ```
 <br>
 
-**btcToSatoshi**   
+**btcToMsatoshi**   
 `undercoin.btcToSatoshi(btcAmount)`  
 Converts BTC to 1/1000th of a satoshi
 
@@ -46,10 +48,10 @@ undercoin.btcToMsatoshi(1) // 100000000000
 
 **mSatoshiToBtc**   
 `undercoin.btcToSatoshi(btcAmount)`  
-Converts BTC to 1/1000th of a satoshi
+Converts mSatoshis to BTC. 
 
 ```javascript
-undercoin.mSatoshiToBtc(1) // 100000000000
+undercoin.mSatoshiToBtc(100000000000) // 1
 ```
 <br>
 
