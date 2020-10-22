@@ -5,10 +5,24 @@ const undercoin = {}
 const CoinKey = require('coinkey')
 const secureRandom = require('secure-random')
 
-//Convert a BTC decimal value (ie- 1.3 BTC) to Satoshis:
-undercoin.btcToSatoshi = (bitcoin) => Math.round(bitcoin * 100000000)
+let bigNumCheck = num => {
+  //Internal function to check if we should send back a string in the case of numbers that exceed JavaScript's integer limits (common when working with mSatashis, for example):
+  let e = parseInt(num.toString().split('e-')[1])
+  if(e) return num.toLocaleString('fullwide', { useGrouping : false , maximumSignificantDigits:21 })
+  return num
+  //credit: https://stackoverflow.com/a/50978675/969114
+}
 
-undercoin.satoshiToBtc = (satoshis) => satoshis / 100000000
+//Convert a BTC decimal value (ie- 1.3 BTC) to Satoshis:
+undercoin.btcToSatoshi = bitcoin => bigNumCheck( Math.round(bitcoin * 100000000) )
+
+//and from Satoshis to BTC decimal value:
+undercoin.satoshiToBtc = (satoshis) => bigNumCheck( satoshis / 100000000 )
+
+//and same for mSatoshis too:
+undercoin.btcToMsatoshi = bitcoin => bigNumCheck( undercoin.btcToSatoshi(bitcoin) * 1000 )
+
+undercoin.mSatoshiToBtc = mSatoshis => bigNumCheck( undercoin.satoshiToBtc( mSatoshis / 1000 ) )
 
 undercoin.newAddress = isTestnet => {
   let network = isTestnet ? 0x6F : 0x00
@@ -51,13 +65,9 @@ const _ = require('underscore')
 
 undercoin.getAddress = (...params) => {
   //parse args
-  let isTestnet = _.find(params, (param) => _.isBoolean(param))
   let callback = _.find(params, (param) => _.isFunction(param))
 
   if(!callback) throw 'a callback must be provided'
-
-  // let network
-  // network = isTestnet ? bitcoin.networks.testnet : bitcoin.networks.bitcoin
 
   //get hash of the latest block ...
   request('https://blockchain.info/q/latesthash', (err, res) => {

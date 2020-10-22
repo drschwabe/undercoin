@@ -13,7 +13,7 @@ const undercoin = require('undercoin')
 ### api
 <a name="api"></a>
 
-If true is supplied as first parameter of any undercoin function, the function will use testnet (where applicable).   
+For functions that accept a `testnet` parameter, said parameter needs be just `true` (otherwise the function will default to mainnet).    
 <br>
 
 **btcToSatoshi**   
@@ -31,6 +31,25 @@ Converts satoshis to BTC
 
 ```javascript
 undercoin.satoshiToBtc(15000000) // 0.15
+```
+<br>
+
+**btcToSatoshi**   
+`undercoin.btcToSatoshi(btcAmount)`  
+Converts BTC to 1/1000th of a satoshi
+
+```javascript
+undercoin.btcToMsatoshi(1) // 100000000000
+```
+<br>
+
+
+**mSatoshiToBtc**   
+`undercoin.btcToSatoshi(btcAmount)`  
+Converts BTC to 1/1000th of a satoshi
+
+```javascript
+undercoin.mSatoshiToBtc(1) // 100000000000
 ```
 <br>
 
