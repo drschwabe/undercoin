@@ -8,6 +8,11 @@
   },
   "author": "Derrick Schwabe",
   "license": "MIT",
+  "homepage": "https://github.com/drschwabe/undercoin",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/drschwabe/undercoin"
+  },
   "devDependencies": {
     "tap-spec": "5.0.0",
     "tape": "4.9.0"
