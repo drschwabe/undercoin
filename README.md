@@ -47,7 +47,7 @@ undercoin.btcToMsatoshi(1) // 100000000000
 
 
 **mSatoshiToBtc**   
-`undercoin.btcToSatoshi(btcAmount)`  
+`undercoin.mSatoshiToBtc(mSatoshis)`  
 Converts mSatoshis to BTC. 
 
 ```javascript
