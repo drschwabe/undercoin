@@ -4,25 +4,16 @@ const undercoin = {}
 
 const CoinKey = require('coinkey')
 const secureRandom = require('secure-random')
-
-let bigNumCheck = num => {
-  //Internal function to check if we should send back a string in the case of numbers that exceed JavaScript's integer limits (common when working with mSatashis, for example):
-  let e = parseInt(num.toString().split('e-')[1])
-  if(e) return num.toLocaleString('fullwide', { useGrouping : false , maximumSignificantDigits:21 })
-  return num
-  //credit: https://stackoverflow.com/a/50978675/969114
-}
+const fm = require('fmtbtc')
 
 //Convert a BTC decimal value (ie- 1.3 BTC) to Satoshis:
-undercoin.btcToSatoshi = bitcoin => bigNumCheck( Math.round(bitcoin * 100000000) )
+undercoin.btcToSatoshi = bitcoin => fm.btc2sat(bitcoin)
 
 //and from Satoshis to BTC decimal value:
-undercoin.satoshiToBtc = (satoshis) => bigNumCheck( satoshis / 100000000 )
+undercoin.satoshiToBtc = satoshis => fm.sat2btc(satoshis)
 
 //and same for mSatoshis too:
-undercoin.btcToMsatoshi = bitcoin => bigNumCheck( undercoin.btcToSatoshi(bitcoin) * 1000 )
-
-undercoin.mSatoshiToBtc = mSatoshis => bigNumCheck( undercoin.satoshiToBtc( mSatoshis / 1000 ) )
+undercoin.btcToMsatoshi = bitcoin => fm.btc2msat(bitcoin )
 
 undercoin.newAddress = isTestnet => {
   let network = isTestnet ? 0x6F : 0x00

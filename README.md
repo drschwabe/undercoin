@@ -15,7 +15,10 @@ const undercoin = require('undercoin')
 
 For functions that accept a `testnet` parameter, said parameter needs be just `true` (otherwise the function will default to mainnet).
 
-For the conversion functions - if they would otherwise return a large number beyond JavaScript's limit a string representation of said number will be returned instead, to a max of 21 decimal points.  
+Conversion functions all return a string to avoid potential issues with floating point precision.  As such, if you need to perform math beyond just conversions consider using MathJS's [BigNumber] feature. 
+
+For more conversion functions see [fmtbtc].
+
 <br>
 
 **btcToSatoshi**   
@@ -23,7 +26,7 @@ For the conversion functions - if they would otherwise return a large number bey
 Converts BTC to satoshis
 
 ```javascript
-undercoin.btcToSatoshi(1) // 100000000
+undercoin.btcToSatoshi(1) // '100000000'
 ```
 <br>
 
@@ -32,7 +35,7 @@ undercoin.btcToSatoshi(1) // 100000000
 Converts satoshis to BTC
 
 ```javascript
-undercoin.satoshiToBtc(15000000) // 0.15
+undercoin.satoshiToBtc(15000000) // '0.15'
 ```
 <br>
 
@@ -41,7 +44,7 @@ undercoin.satoshiToBtc(15000000) // 0.15
 Converts BTC to 1/1000th of a satoshi
 
 ```javascript
-undercoin.btcToMsatoshi(1) // 100000000000
+undercoin.btcToMsatoshi(1) // '100000000000'
 ```
 <br>
 
@@ -51,9 +54,19 @@ undercoin.btcToMsatoshi(1) // 100000000000
 Converts mSatoshis to BTC. 
 
 ```javascript
+undercoin.mSatoshiToBtc(100000000000) // '1'
+```
+<br>
+
+**mSatoshiToSat**   
+`undercoin.btcToSatoshi(mSatoshis)`  
+Converts mSatoshis to regular satoshis. 
+
+```javascript
 undercoin.mSatoshiToBtc(100000000000) // 1
 ```
 <br>
+
 
 
 **newAddress**   
@@ -111,3 +124,7 @@ undercoin.getAddress((err, address) => console.log(address))
 
 
 MIT
+
+
+[BigNumber]: https://mathjs.org/docs/datatypes/bignumbers.html
+[fmtbtc]: https://github.com/shesek/fmtbtc 

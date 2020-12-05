@@ -17,11 +17,14 @@
     "tap-spec": "5.0.0",
     "tape": "4.9.0"
   },
-  "keywords": ["bitcoin, wif, satoshi, keypair, address, coinkey, bitcoinjs"],
+  "keywords": [
+    "bitcoin, wif, satoshi, keypair, address, coinkey, bitcoinjs"
+  ],
   "dependencies": {
     "bitcoin-address-validation": "1.0.1",
     "bitcoinjs-lib": "4.0.2",
     "coinkey": "3.0.0",
+    "fmtbtc": "0.0.3",
     "request": "2.88.0",
     "secure-random": "1.1.2",
     "underscore": "1.9.1"
