@@ -23,11 +23,30 @@ test('Can convert satoshis to BTC', t => {
 })
 
 test('Can convert mSatoshis to BTC', t => {
-  t.plan(1) 
+  t.plan(2) 
   let oneBTCinMsats = 100000000000
   let btc = undercoin.mSatoshiToBtc(oneBTCinMsats)
   t.equals(btc, '1', 'Accurately converts 100,000,000,000 mSatoshis to Bitcoin')
+  let oneMsatInBTC = '0.00000000001'
+  let btc2 = undercoin.mSatoshiToBtc(1)
+  t.equals(btc2, oneMsatInBTC, 'Accurately converts one msat to BTC')
+
 })
+
+test('Can convert mSatoshis to regular satoshis', t => {
+  t.plan(1) 
+  let mSatsInOneSatoshi = '1000'
+  let sats = undercoin.mSatoshiToSat(mSatsInOneSatoshi)
+  t.equals(sats, '1', 'Accurately converts 1000 mSatoshis to 1 satoshi')
+})
+
+test('Can convert satoshis to mSatoshis', t => {
+  t.plan(1) 
+  let mSatsInOneSatoshi = '1000'
+  let mSats = undercoin.satoshiToMsat(1)
+  t.equals(mSats, mSatsInOneSatoshi, 'Accurately converts 1 Satoshi to 1000 mSatoshis')
+})
+
 
 const bitcoinValidate = require('bitcoin-address-validation')
 

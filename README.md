@@ -59,14 +59,23 @@ undercoin.mSatoshiToBtc(100000000000) // '1'
 <br>
 
 **mSatoshiToSat**   
-`undercoin.btcToSatoshi(mSatoshis)`  
+`undercoin.mSatoshiToSat(mSatoshis)`  
 Converts mSatoshis to regular satoshis. 
 
 ```javascript
-undercoin.mSatoshiToBtc(100000000000) // 1
+undercoin.mSatoshiToSat(1000) // '1'
 ```
 <br>
 
+
+**satoshiToMsat**   
+`undercoin.satoshiToMsat(satoshis)`  
+Converts satoshis to mSatoshis. 
+
+```javascript
+undercoin.satoshiToMsat(1) // '1000'
+```
+<br>
 
 
 **newAddress**   

@@ -15,6 +15,13 @@ undercoin.satoshiToBtc = satoshis => fm.sat2btc(satoshis)
 //and same for mSatoshis too:
 undercoin.btcToMsatoshi = bitcoin => fm.btc2msat(bitcoin )
 
+undercoin.mSatoshiToBtc = bitcoin => fm.msat2btc(bitcoin )
+
+undercoin.mSatoshiToSat = mSatoshis => fm.msat2sat( mSatoshis )
+
+undercoin.satoshiToMsat = satoshis => fm.sat2msat( satoshis )
+
+
 undercoin.newAddress = isTestnet => {
   let network = isTestnet ? 0x6F : 0x00
   let bytes = secureRandom.randomBuffer(32)
