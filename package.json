@@ -1,6 +1,6 @@
 {
   "name": "undercoin",
-  "version": "0.0.2c",
+  "version": "0.0.3",
   "description": "Bitcoin utility belt",
   "main": "undercoin.js",
   "scripts": {

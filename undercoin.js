@@ -7,19 +7,19 @@ const secureRandom = require('secure-random')
 const fm = require('fmtbtc')
 
 //Convert a BTC decimal value (ie- 1.3 BTC) to Satoshis:
-undercoin.btcToSatoshi = bitcoin => fm.btc2sat(bitcoin)
+undercoin.btc2sat = bitcoin => fm.btc2sat(bitcoin)
 
 //and from Satoshis to BTC decimal value:
-undercoin.satoshiToBtc = satoshis => fm.sat2btc(satoshis)
+undercoin.sat2btc = satoshis => fm.sat2btc(satoshis)
 
 //and same for mSatoshis too:
-undercoin.btcToMsatoshi = bitcoin => fm.btc2msat(bitcoin )
+undercoin.btc2msat = bitcoin => fm.btc2msat(bitcoin )
 
-undercoin.mSatoshiToBtc = bitcoin => fm.msat2btc(bitcoin )
+undercoin.msat2btc = bitcoin => fm.msat2btc(bitcoin )
 
-undercoin.mSatoshiToSat = mSatoshis => fm.msat2sat( mSatoshis )
+undercoin.msat2sat = mSatoshis => fm.msat2sat( mSatoshis )
 
-undercoin.satoshiToMsat = satoshis => fm.sat2msat( satoshis )
+undercoin.sat2msat = satoshis => fm.sat2msat( satoshis )
 
 
 undercoin.newAddress = isTestnet => {
