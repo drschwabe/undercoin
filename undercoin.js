@@ -109,4 +109,12 @@ undercoin.getAddress = (...params) => {
 }
 //###
 
+
+const bitcoinValidate = require('bitcoin-address-validation')
+
+undercoin.isSegwit = address => {
+  let validated = bitcoinValidate(address)
+  return validated.bech32 ? true : false 
+}
+
 module.exports = undercoin

@@ -131,6 +131,15 @@ undercoin.getAddress((err, address) => console.log(address))
 ```
 <br>  
 
+**isSegwit**
+`undercoin.isSegwit(address)`
+Determines if address is Segwit (Bech32) or not.
+
+```javascript 
+undercoin.isSegwit('bc1qx9lplhcemust5q7vjejmfaglg8h6knu7a92r5p')
+// true
+```
+
 
 MIT
 

@@ -133,6 +133,15 @@ test('Can create a WIF (testnet)?', t => {
   t.ok(validated && validated.network === 'testnet', 'Address generated from WIF is valid and BTC testnet')
 })
 
+
+test('Can verify if address is Segwit?', t => {
+  t.plan(2) 
+  let segwitAddress = 'bc1qx9lplhcemust5q7vjejmfaglg8h6knu7a92r5p'
+  let notSegwitAddress = '1254X3ykbeiLFLmbAHmpPzAXe4NuoUm11H'
+  t.ok ( undercoin.isSegwit( segwitAddress ) )
+  t.notOk (undercoin.isSegwit ( notSegwitAddress )  )
+})
+
 test.skip('Can verify a string is a WIF?', t => {
   //let thisIsAWif =
 
