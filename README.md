@@ -15,68 +15,6 @@ const undercoin = require('undercoin')
 
 For functions that accept a `testnet` parameter, said parameter needs be just `true` (otherwise the function will default to mainnet).
 
-Conversion functions all return a string to avoid potential issues with floating point precision.  As such, if you need to perform math beyond just conversions consider using MathJS's [BigNumber] feature. 
-
-For more conversion functions see [fmtbtc]
-
-<br>
-
-**btc2sat**   
-`undercoin.btc2sat(btcAmount)`  
-Converts BTC to satoshis
-
-```javascript
-undercoin.btc2sat(1) // '100000000'
-```
-<br>
-
-**sat2btc**   
-`undercoin.sat2btc(satoshis)`  
-Converts satoshis to BTC
-
-```javascript
-undercoin.sat2btc(15000000) // '0.15'
-```
-<br>
-
-**btc2msat**   
-`undercoin.btc2msat(btcAmount)`  
-Converts BTC to 1/1000th of a satoshi
-
-```javascript
-undercoin.btc2msat(1) // '100000000000'
-```
-<br>
-
-
-**msat2btc**   
-`undercoin.msat2btc(mSatoshis)`  
-Converts mSatoshis to BTC. 
-
-```javascript
-undercoin.msat2btc(1) // '0.00000000001'
-```
-<br>
-
-**msat2sat**   
-`undercoin.msat2sat(mSatoshis)`  
-Converts mSatoshis to regular satoshis. 
-
-```javascript
-undercoin.msat2sat(1000) // '1'
-```
-<br>
-
-
-**sat2msat**   
-`undercoin.msat2sat(satoshis)`  
-Converts satoshis to mSatoshis. 
-
-```javascript
-undercoin.sat2msat(1) // '1000'
-```
-<br>
-
 
 **newAddress**   
 `undercoin.newAddress(testnet)`  
@@ -139,6 +77,71 @@ Determines if address is Segwit (Bech32) or not.
 undercoin.isSegwit('bc1qx9lplhcemust5q7vjejmfaglg8h6knu7a92r5p')
 // true
 ```
+
+
+
+#### Conversion functions
+
+The following conversion functions are directly from [fmtbtc], see also that repo for more conversions beyond this selection below:  
+
+<br>
+
+**btc2sat**   
+`undercoin.btc2sat(btcAmount)`  
+Converts BTC to satoshis
+
+```javascript
+undercoin.btc2sat(1) // '100000000'
+```
+<br>
+
+**sat2btc**   
+`undercoin.sat2btc(satoshis)`  
+Converts satoshis to BTC
+
+```javascript
+undercoin.sat2btc(15000000) // '0.15'
+```
+<br>
+
+**btc2msat**   
+`undercoin.btc2msat(btcAmount)`  
+Converts BTC to 1/1000th of a satoshi
+
+```javascript
+undercoin.btc2msat(1) // '100000000000'
+```
+<br>
+
+
+**msat2btc**   
+`undercoin.msat2btc(mSatoshis)`  
+Converts mSatoshis to BTC. 
+
+```javascript
+undercoin.msat2btc(1) // '0.00000000001'
+```
+<br>
+
+**msat2sat**   
+`undercoin.msat2sat(mSatoshis)`  
+Converts mSatoshis to regular satoshis. 
+
+```javascript
+undercoin.msat2sat(1000) // '1'
+```
+<br>
+
+
+**sat2msat**   
+`undercoin.msat2sat(satoshis)`  
+Converts satoshis to mSatoshis. 
+
+```javascript
+undercoin.sat2msat(1) // '1000'
+```
+<br>
+
 
 
 MIT
