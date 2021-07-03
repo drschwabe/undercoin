@@ -141,21 +141,3 @@ test('Can verify if address is Segwit?', t => {
   t.ok ( undercoin.isSegwit( segwitAddress ) )
   t.notOk (undercoin.isSegwit ( notSegwitAddress )  )
 })
-
-test.skip('Can verify a string is a WIF?', t => {
-  //let thisIsAWif =
-
-})
-
-test.skip('Can send BTC?', t => {
-  t.plan(2)
-  let notAValidAttempt = undercoin.sendBTC(null, 'test', 1)
-  t.notOk(notAValidAttempt)
-
-  let privateKey = 'cPBieu6V2RwoKdZn6bNtWBp6YdMFAD5PrG8BNT2Ezuviqva83qwL' 
-  //^ needs testnet BTC!!
-  let destinationAddress =  'n4Xj9EGkZYMKNGjfKtiqcZtUyoe2NXqs3K' //< testnet address
-
-  let testnetAttempt = undercoin.sendBTC(privateKey, destinationAddress, 0.001)
-  t.ok(testnetAttempt)
-})
